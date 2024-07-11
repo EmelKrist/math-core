@@ -1,5 +1,7 @@
 package ru.emelkrist.math_problems;
 
+import ru.emelkrist.Calculation;
+
 import java.util.concurrent.Semaphore;
 
 /**
@@ -9,8 +11,8 @@ import java.util.concurrent.Semaphore;
  * <p>
  * link: https://ru.wikipedia.org/wiki/Задача_об_обедающих_философах
  */
-public class DiningPhilosophers implements Solable {
-    private final String problemName = "Задача об обедающих философах";
+public class DiningPhilosophers implements Solable, Calculation {
+    private final String name = "Задача об обедающих философах";
     private static final int NUM_PHILOSOPHERS = 5;
     private static Semaphore[] forks = new Semaphore[NUM_PHILOSOPHERS];
     private static Semaphore dining = new Semaphore(NUM_PHILOSOPHERS - 1);
@@ -74,7 +76,7 @@ public class DiningPhilosophers implements Solable {
         Thread.sleep((long) (Math.random() * 1000));
     }
 
-    public String getProblemName() {
-        return problemName;
+    public String getName() {
+        return name;
     }
 }
