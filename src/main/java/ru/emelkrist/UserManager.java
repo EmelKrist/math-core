@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// todo обработку исключений
 public class UserManager {
     private List<Solable> problems = new ArrayList<>();
     private List<MathSection> mathSections = new ArrayList<>();
@@ -26,29 +25,35 @@ public class UserManager {
      * Метод для управления вводом входных данных.
      */
     public void manageInput() {
-        Scanner input = new Scanner(System.in);
+        Scanner input;
         boolean inProgress = true;
         while (inProgress) {
-            System.out.println("Выберите задачу для решения:");
+            input = new Scanner(System.in);
+            System.out.println("\nВыберите задачу для решения:");
             System.out.println("1. Решить математическую проблему;");
             System.out.println("2. Выполнить вычисления;");
             System.out.println("3. Выход.");
             System.out.print("Пункт меню: ");
-            int taskNum = input.nextInt();
-            switch (taskNum) {
-                case 1 -> {
-                    solveProblem();
-                    inProgress = false;
+            try {
+                int taskNum = input.nextInt();
+                switch (taskNum) {
+                    case 1 -> {
+                        solveProblem();
+                        inProgress = false;
+                    }
+                    case 2 -> {
+                        runMathSection();
+                        inProgress = false;
+                    }
+                    case 3 -> {
+                        System.out.println("Работа программы завершена.");
+                        System.exit(0);
+                    }
+                    default -> System.out.println("Такого пункта меню нет! Пожалуйста, попробуйте еще раз...");
                 }
-                case 2 -> {
-                    runMathSection();
-                    inProgress = false;
-                }
-                case 3 -> {
-                    System.out.println("Работа программы завершена.");
-                    System.exit(0);
-                }
-                default -> System.out.println("Некорректно введенные данные! Пожалуйста, попробуйте еще раз...");
+            } catch (Exception e) {
+                System.out.println("Введенный пункт меню должен быть просто числом без пробелов и других символов! " +
+                        "\nПожалуйста, попробуйте еще раз...");
             }
         }
     }
@@ -58,8 +63,9 @@ public class UserManager {
      * указанной пользователем.
      */
     private void solveProblem() {
-        Scanner input = new Scanner(System.in);
+        Scanner input;
         while (true) {
+            input = new Scanner(System.in);
             try {
                 System.out.println("\nСписок доступных математических проблем: ");
                 printCalculation(problems);
@@ -67,6 +73,9 @@ public class UserManager {
                 int problemNum = input.nextInt();
                 Solable problem = problems.get(problemNum - 1);
                 problem.solve();
+                break;
+            } catch (ClassCastException e) {
+                System.out.println("Ошибка работы раздела!");
                 break;
             } catch (Exception e) {
                 System.out.println("Некорректно введенные данные! Пожалуйста, попробуйте еще раз...");
@@ -79,8 +88,9 @@ public class UserManager {
      * указанной пользователем.
      */
     private void runMathSection() {
-        Scanner input = new Scanner(System.in);
+        Scanner input;
         while (true) {
+            input = new Scanner(System.in);
             try {
                 System.out.println("\nСписок доступных вычислений: ");
                 printCalculation(mathSections);
@@ -88,6 +98,9 @@ public class UserManager {
                 int sectionNum = input.nextInt();
                 MathSection section = mathSections.get(sectionNum - 1);
                 section.run();
+                break;
+            } catch (ClassCastException e) {
+                System.out.println("Ошибка работы раздела!");
                 break;
             } catch (Exception e) {
                 System.out.println("Некорректно введенные данные! Пожалуйста, попробуйте еще раз...");
@@ -100,8 +113,9 @@ public class UserManager {
      * выбранных пользователем.
      *
      * @param inputCalculations список задач.
+     * @throws ClassCastException ошибка приведения.
      */
-    private void printCalculation(List<?> inputCalculations) {
+    private void printCalculation(List<?> inputCalculations) throws ClassCastException {
         List<Calculation> calculations = (List<Calculation>) inputCalculations;
         int i = 1;
         for (Calculation calculation : calculations) {

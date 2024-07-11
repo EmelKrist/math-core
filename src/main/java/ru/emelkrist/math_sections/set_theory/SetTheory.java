@@ -3,10 +3,7 @@ package ru.emelkrist.math_sections.set_theory;
 import ru.emelkrist.Calculation;
 import ru.emelkrist.math_sections.MathSection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class SetTheory implements MathSection, Calculation {
     private final String name = "Теория множеств";
@@ -36,14 +33,21 @@ public class SetTheory implements MathSection, Calculation {
         while (true) {
             try {
                 Scanner input = new Scanner(System.in);
-                System.out.println("Введите через пробел числа множества " + setName + ": ");
-                String setData = input.nextLine().trim();
+                System.out.println("Введите через пробел целые числа множества " + setName + ": ");
+                String setData = input.nextLine().trim().replaceAll("\\s{2,}", " ");
                 set = parseSetData(setData);
                 break;
+            } catch (NumberFormatException e) {
+                System.out.println("Множества могут состоять только из целых чисел! Пожалуйста, попробуйте еще раз...");
             } catch (Exception e) {
                 System.out.println("Некорректно введенные данные! Пожалуйста, попробуйте еще раз...");
             }
         }
+
+        if (set == null) {
+            set = Collections.emptyList();
+        }
+
         return set;
     }
 
@@ -51,9 +55,9 @@ public class SetTheory implements MathSection, Calculation {
      * Метод для парсинга строковых входных данных множества.
      * @param setData строковые данные множества
      * @return список данных множества
+     * @throws NumberFormatException исключение формата данных (если введено что-то, кроме целого числа.
      */
-    private List<Integer> parseSetData(String setData) {
-        // todo обработку исключений
+    private List<Integer> parseSetData(String setData) throws NumberFormatException {
         return Arrays.stream(setData.split(" ")).map(Integer::valueOf).toList();
     }
 
