@@ -3,6 +3,7 @@ package ru.emelkrist;
 import ru.emelkrist.math_problems.DiningPhilosophers;
 import ru.emelkrist.math_problems.Solable;
 import ru.emelkrist.math_sections.MathSection;
+import ru.emelkrist.math_sections.linear_algebra.Vectors;
 import ru.emelkrist.math_sections.set_theory.SetTheory;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class UserManager {
 
     {
         mathSections.add(new SetTheory());
+        mathSections.add(new Vectors());
     }
 
     /**
@@ -119,7 +121,8 @@ public class UserManager {
         List<Calculation> calculations = (List<Calculation>) inputCalculations;
         int i = 1;
         for (Calculation calculation : calculations) {
-            System.out.println(i + ". " + calculation.getName());
+            System.out.println(i + ". " + calculation.getName() + ".");
+            i++;
         }
     }
 }
