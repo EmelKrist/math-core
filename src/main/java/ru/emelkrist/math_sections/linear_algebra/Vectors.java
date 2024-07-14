@@ -3,6 +3,7 @@ package ru.emelkrist.math_sections.linear_algebra;
 import ru.emelkrist.Calculation;
 import ru.emelkrist.math_sections.MathSection;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Vectors implements MathSection, Calculation {
@@ -13,6 +14,7 @@ public class Vectors implements MathSection, Calculation {
     private double _bAbs;
     private double cosL;
     private double scalarProduct;
+    private double[] vectorProduct;
 
     @Override
     public String getName() {
@@ -26,7 +28,30 @@ public class Vectors implements MathSection, Calculation {
         _bAbs = calcVectorAbs(vectorB);
         cosL = calcCosOfAngle(_aAbs, _bAbs);
         scalarProduct = calcScalarProduct();
+        vectorProduct = calcVectorProduct();
         printResult();
+    }
+
+    /**
+     * Метод для вычисления векторного произведения.
+     *
+     * @return вектор векторного произведения
+     */
+    private double[] calcVectorProduct() {
+        try {
+            if (vectorA.length != 3) return null;
+            vectorProduct = new double[3];
+            double x = vectorA[1] * vectorB[2] - vectorA[2] * vectorB[1];
+            vectorProduct[0] = x;
+            double y = vectorA[2] * vectorB[0] - vectorA[0] * vectorB[2];
+            vectorProduct[1] = y;
+            double z = vectorA[0] * vectorB[1] - vectorA[1] * vectorB[0];
+            vectorProduct[2] = z;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return vectorProduct;
     }
 
     /**
@@ -37,6 +62,11 @@ public class Vectors implements MathSection, Calculation {
         System.out.printf("\nМодуль B = %.2f", _bAbs);
         System.out.printf("\nКосинус угла = %.2f", cosL);
         System.out.printf("\nСкалярное произведение = %.2f", scalarProduct);
+        if (vectorProduct == null) {
+            System.out.println("\nДля вычисления векторного произведения вектора должны иметь размер 3.");
+            return;
+        }
+        System.out.println("\nВекторное произведение = " + Arrays.toString(vectorProduct));
     }
 
     /**
