@@ -3,6 +3,7 @@ package ru.emelkrist;
 import ru.emelkrist.math_problems.DiningPhilosophers;
 import ru.emelkrist.math_problems.Solable;
 import ru.emelkrist.math_sections.MathSection;
+import ru.emelkrist.math_sections.geom_shapes.GeomShapes;
 import ru.emelkrist.math_sections.linear_algebra.Vectors;
 import ru.emelkrist.math_sections.set_theory.SetTheory;
 
@@ -21,6 +22,7 @@ public class UserManager {
     {
         mathSections.add(new SetTheory());
         mathSections.add(new Vectors());
+        mathSections.add(new GeomShapes());
     }
 
     /**
